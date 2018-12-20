@@ -1,4 +1,4 @@
-const MongoDB = require('./persistence/mongodb.js');
+const MongoDB = require('./implementation/mongodb.js');
 
 module.exports = {
     MongoDB

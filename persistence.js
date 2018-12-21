@@ -4,7 +4,11 @@ class Persistence {
     /**
      * Implement this in a subclass.
      */
-    cleanUp(){}
+    cleanUp() { }
+    create() { }
+    read() { }
+    update() { }
+    delete() { }
 }
 
 Shutdown(Persistence.cleanUp);

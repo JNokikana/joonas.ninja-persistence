@@ -3,10 +3,12 @@ const Persistence = require('../persistence.js');
 let Database;
 let Client;
 
-async function init(dbName, dbUrl) {
-    Client = new MongoClient(dbUrl);
+async function init(dbName, dbUrl, dbUser, dbPassword) {
+    let url = `mongodb://${dbUser}:${dbPassword}@${dbUrl}/?authMechanism=DEFAULT`
+    Client = new MongoClient(url);
     try {
         await Client.connect();
+        console.log("Connected to mongodb.");
         return Client.db(dbName);
     } catch (error) {
         console.log(error);
@@ -16,9 +18,12 @@ async function init(dbName, dbUrl) {
 }
 
 class MongoDB extends Persistence {
-    constructor(dbName, dbUrl) {
+    constructor(dbName, dbUrl, dbUser, dbPassword) {
         super();
-        init(dbName || process.env.DB_NAME, dbUrl || process.env.DB_URL)
+        init(dbName || process.env.DB_NAME,
+            dbUrl || process.env.DB_URL,
+            dbUser || process.env.DB_USERNAME,
+            dbPassword || process.env.DB_PASSWORD)
             .then((database) => {
                 Database = database;
             }, (error) => {

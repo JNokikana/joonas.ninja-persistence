@@ -56,6 +56,9 @@ class MongoDB extends Persistence {
         let response;
         try {
             response = await Database.collection(collection).find({}).toArray();
+            if(!response){
+                return [];
+            }
             return response;
         } catch (error) {
             throw error;

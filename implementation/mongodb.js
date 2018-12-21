@@ -59,10 +59,10 @@ class MongoDB extends Persistence {
         try {
             let filterObject = {};
             if (filter && filter._id) {
-                if(filter._id instanceof ObjectID){
+                if (filter._id instanceof ObjectID) {
                     filterObject._id = filter._id;
                 }
-                else{
+                else {
                     filterObject._id = new ObjectID(filter._id);
                 }
             }
@@ -72,10 +72,10 @@ class MongoDB extends Persistence {
             throw error;
         }
     }
-    async update(collection, payload) {
+    async update(collection, original, update) {
         let response;
         try {
-            response = await Database.collection(collection).findOneAndUpdate(payload);
+            response = await Database.collection(collection).updateOne(original, { $set: update });
             return response;
         } catch (error) {
             throw error;

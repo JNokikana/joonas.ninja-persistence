@@ -23,6 +23,7 @@ function cleanUp() {
     if (Client) {
         Client.close();
     }
+    process.exit(0);
 }
 
 class MongoDB extends Persistence {

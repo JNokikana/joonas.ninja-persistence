@@ -4,7 +4,9 @@ class Persistence {
     /**
      * Implement this in a subclass.
      */
-    cleanUp() { }
+    cleanUp() { 
+        console.log("Should not be here.");
+    }
     create() { }
     read() { }
     update() { }

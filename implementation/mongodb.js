@@ -45,6 +45,7 @@ class MongoDB extends Persistence {
         }
     }
     cleanUp() {
+        console.log("Shutting down..");
         if (Client) {
             Client.close();
         }

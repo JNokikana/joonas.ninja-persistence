@@ -11,13 +11,19 @@ async function init(dbName, dbUrl) {
     } catch (error) {
         console.log(error);
         Client.close();
+        throw "Error initializing client.";
     }
 }
 
-class MongoDB extends Persistence{
-    async constructor(dbName, dbUrl) {
+class MongoDB extends Persistence {
+    constructor(dbName, dbUrl) {
         super();
-        Database = await init(dbName || process.env.DB_NAME, dbUrl || process.env.DB_URL);
+        init(dbName || process.env.DB_NAME, dbUrl || process.env.DB_URL)
+            .then((database) => {
+                Database = database;
+            }, (error) => {
+                console.log(error);
+            });
     }
     async create(collection, payload) {
         let response;

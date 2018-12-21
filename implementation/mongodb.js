@@ -55,7 +55,7 @@ class MongoDB extends Persistence {
     async read(collection) {
         let response;
         try {
-            response = await Database.collection(collection).find({});
+            response = await Database.collection(collection).find({}).toArray();
             return response;
         } catch (error) {
             throw error;

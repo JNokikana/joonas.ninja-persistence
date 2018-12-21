@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const Persistence = require('../persistence.js');
-const Database;
-const Client;
+let Database;
+let Client;
 
 async function init(dbName, dbUrl) {
     Client = new MongoClient(dbUrl);

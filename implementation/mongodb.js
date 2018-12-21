@@ -53,10 +53,23 @@ class MongoDB extends Persistence {
             throw error;
         }
     }
-    async read(collection) {
+    async read(collection, filter) {
         let response;
         try {
-            response = await Database.collection(collection).find({}).toArray();
+            let filterObject = {};
+            if (filter._id) {
+                filterObject._id = filter._id;
+            }
+            response = await Database.collection(collection).find(filterObject).toArray();
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
+    async update(collection, payload) {
+        let response;
+        try {
+            response = await Database.collection(collection).findOneAndUpdate(payload);
             return response;
         } catch (error) {
             throw error;

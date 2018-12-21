@@ -41,7 +41,7 @@ class MongoDB extends Persistence {
             }
             return response;
         } catch (error) {
-            console.log(error);
+            throw error;
         }
     }
     cleanUp() {

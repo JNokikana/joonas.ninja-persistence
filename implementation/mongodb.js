@@ -57,7 +57,7 @@ class MongoDB extends Persistence {
         let response;
         try {
             let filterObject = {};
-            if (filter._id) {
+            if (filter && filter._id) {
                 filterObject._id = filter._id;
             }
             response = await Database.collection(collection).find(filterObject).toArray();

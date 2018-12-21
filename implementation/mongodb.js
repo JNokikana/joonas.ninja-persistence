@@ -58,12 +58,17 @@ class MongoDB extends Persistence {
         let response;
         try {
             let filterObject = {};
-            if (filter && filter._id) {
-                if (filter._id instanceof ObjectID) {
-                    filterObject._id = filter._id;
+            if (filter) {
+                if (filter._id) {
+                    if (filter._id instanceof ObjectID) {
+                        filterObject._id = filter._id;
+                    }
+                    else {
+                        filterObject._id = new ObjectID(filter._id);
+                    }
                 }
-                else {
-                    filterObject._id = new ObjectID(filter._id);
+                if (filter.active) {
+                    filterObject.active = filter.active;
                 }
             }
             response = await Database.collection(collection).find(filterObject).toArray();

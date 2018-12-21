@@ -15,7 +15,7 @@ async function init(dbName, dbUrl) {
 }
 
 class MongoDB extends Persistence{
-    constructor(dbName, dbUrl) {
+    async constructor(dbName, dbUrl) {
         super();
         Database = await init(dbName || process.env.DB_NAME, dbUrl || process.env.DB_URL);
     }

@@ -1,6 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const Persistence = require('../persistence.js').Persistence;
 const OnExit = require('../persistence.js').Shutdown;
+const ObjectID = require('mongodb').ObjectID;
 let Database;
 let Client;
 
@@ -58,7 +59,12 @@ class MongoDB extends Persistence {
         try {
             let filterObject = {};
             if (filter && filter._id) {
-                filterObject._id = filter._id;
+                if(filter._id instanceof ObjectID){
+                    filterObject._id = filter._id;
+                }
+                else{
+                    filterObject._id = new ObjectID(filter._id);
+                }
             }
             response = await Database.collection(collection).find(filterObject).toArray();
             return response;

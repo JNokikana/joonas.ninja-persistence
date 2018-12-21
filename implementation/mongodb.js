@@ -1,5 +1,6 @@
 const MongoClient = require('mongodb').MongoClient;
-const Persistence = require('../persistence.js');
+const Persistence = require('../persistence.js').Persistence;
+const OnExit = require('../persistence.js').Shutdown;
 let Database;
 let Client;
 
@@ -14,6 +15,13 @@ async function init(dbName, dbUrl, dbUser, dbPassword) {
         console.log(error);
         Client.close();
         throw "Error initializing client.";
+    }
+}
+
+function cleanUp() {
+    console.log("Shutting down..");
+    if (Client) {
+        Client.close();
     }
 }
 
@@ -44,12 +52,17 @@ class MongoDB extends Persistence {
             throw error;
         }
     }
-    cleanUp() {
-        console.log("Shutting down..");
-        if (Client) {
-            Client.close();
+    async read(collection) {
+        let response;
+        try {
+            response = await Database.collection(collection).find({});
+            return response;
+        } catch (error) {
+            throw error;
         }
     }
 }
+
+OnExit(cleanUp);
 
 module.exports = MongoDB;

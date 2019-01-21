@@ -3,11 +3,9 @@
   "version": "1.0.15",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "author": "Joonas Nousiainen",
+  "homepage": "https://www.joonas.ninja",
+  "license": "MIT",
   "dependencies": {
     "death": "^1.1.0",
     "mongodb": "^3.1.10"

@@ -1,5 +1,5 @@
 {
-  "name": "@joonas.ninja/persistence",
+  "name": "joonas.ninja-persistence",
   "version": "1.0.17",
   "description": "A work in progress persistence wrapper for MongoDB.",
   "main": "index.js",

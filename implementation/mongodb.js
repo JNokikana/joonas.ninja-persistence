@@ -20,7 +20,7 @@ class MongoDB extends Persistence {
         try {
             await Client.connect();
             console.log("Connected to mongodb.");
-            return Client.db(dbName || process.env.DB_NAME);
+            Database = Client.db(dbName || process.env.DB_NAME);
         } catch (error) {
             console.log(error);
             Client.close();

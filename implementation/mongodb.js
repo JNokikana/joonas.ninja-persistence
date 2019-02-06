@@ -57,7 +57,7 @@ class MongoDB extends Persistence {
                         }
                     }
                     else {
-                        filterObject[keys[i]] = filter[keys[i]];
+                        filterObject[keys[i]] = JSON.parse(filter[keys[i]]);
                     }
                 }
             }

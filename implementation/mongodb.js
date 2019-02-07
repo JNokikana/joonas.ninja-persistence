@@ -56,8 +56,13 @@ class MongoDB extends Persistence {
                             filterObject._id = new ObjectID(filter._id);
                         }
                     }
-                    else {
+                    else if (filter[keys[i]] === "true" ||
+                        filter[keys[i]] === "false") {
                         filterObject[keys[i]] = JSON.parse(filter[keys[i]]);
+
+                    }
+                    else {
+                        filterObject[keys[i]] = filter[keys[i]];
                     }
                 }
             }

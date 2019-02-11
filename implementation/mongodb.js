@@ -36,7 +36,8 @@ class MongoDB extends Persistence {
             else {
                 response = await Database.collection(collection).insertOne(payload);
             }
-            return response;
+            let id = response.insertedId.toString();
+            return id;
         } catch (error) {
             throw error;
         }

@@ -76,6 +76,9 @@ class MongoDB extends Persistence {
     async update(collection, original, update) {
         let response;
         try {
+            if(original._id && !original._id instanceof ObjectID){
+                original._id = new ObjectID(original._id);
+            }
             response = await Database.collection(collection).updateOne(original, { $set: update });
             return response;
         } catch (error) {

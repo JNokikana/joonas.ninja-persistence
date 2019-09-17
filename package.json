@@ -1,6 +1,6 @@
 {
   "name": "joonas.ninja-persistence",
-  "version": "1.0.25",
+  "version": "1.0.26",
   "description": "A work in progress persistence wrapper for MongoDB.",
   "main": "index.js",
   "author": "Joonas Nousiainen",

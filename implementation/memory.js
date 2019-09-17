@@ -9,6 +9,15 @@ function cleanUp() {
     process.exit(0);
 }
 
+function findCollectionIfItExists(name) {
+    for (var i = 0; i < Database.collections.length; i++) {
+        if (Database.collections[i].name === name) {
+            return Database.collections[i];
+        }
+    }
+    return null;
+}
+
 class Memory extends Persistence {
     async init(dbName) {
         try {
@@ -21,15 +30,14 @@ class Memory extends Persistence {
     }
     async create(collection, payload) {
         let response;
+        let collectionObject;
         try {
-            if (Array.isArray(payload)) {
-                response = await Database.collection(collection).insertMany(payload);
+            collectionObject = findCollectionIfItExists(collection);
+            if (!collectionObject) {
+                collectionObject = await Database.addCollection(collection);
             }
-            else {
-                response = await Database.collection(collection).insertOne(payload);
-            }
-            let id = response.insertedId.toString();
-            return id;
+            response = await collectionObject.insert(payload);
+            return response;
         } catch (error) {
             throw error;
         }
@@ -38,6 +46,8 @@ class Memory extends Persistence {
         let response;
         try {
             let filterObject = {};
+            let collectionObject
+            /*
             if (filter) {
                 let keys = Object.keys(filter);
                 for (var i = 0; i < keys.length; i++) {
@@ -59,8 +69,15 @@ class Memory extends Persistence {
                     }
                 }
             }
-            response = await Database.collection(collection).find(filterObject).toArray();
-            return response;
+            */
+           collectionObject = findCollectionIfItExists(collection);
+            if (collectionObject) {
+                response = await collectionObject.find(filterObject);
+                return response;
+            }
+            else {
+                return [];
+            }
         } catch (error) {
             throw error;
         }
@@ -68,7 +85,7 @@ class Memory extends Persistence {
     async update(collection, original, update) {
         let response;
         try {
-            if(original._id && !(original._id instanceof ObjectID)){
+            if (original._id && !(original._id instanceof ObjectID)) {
                 original._id = new ObjectID(original._id);
             }
             response = await Database.collection(collection).updateOne(original, { $set: update });
@@ -81,4 +98,4 @@ class Memory extends Persistence {
 
 OnExit(cleanUp);
 
-module.exports = MongoDB;
+module.exports = Memory;

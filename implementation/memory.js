@@ -45,7 +45,7 @@ class Memory extends Persistence {
     async read(collection, filter) {
         let response;
         try {
-            let filterObject = {};
+            let filterObject = filter;
             let collectionObject
             /*
             if (filter) {

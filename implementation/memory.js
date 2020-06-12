@@ -94,6 +94,15 @@ class Memory extends Persistence {
             throw error;
         }
     }
+    async delete(collection, filter) {
+        let response;
+        try {
+            response = await Database.collection(collection).delete(filter);
+            return response;
+        } catch (error) {
+            throw error;
+        }
+    }
 }
 
 OnExit(cleanUp);

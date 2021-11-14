@@ -94,6 +94,9 @@ class MongoDB extends Persistence {
             throw error;
         }
     }
+    async getDb() {
+        return Database;
+    }
 }
 
 OnExit(cleanUp);

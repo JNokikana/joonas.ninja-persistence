@@ -1,7 +1,7 @@
 const MongoClient = require('mongodb').MongoClient;
 const Persistence = require('../persistence.js').Persistence;
 const OnExit = require('../persistence.js').Shutdown;
-const ObjectID = require('mongodb').ObjectID;
+const ObjectId = require('mongodb').ObjectId;
 let Database;
 let Client;
 
@@ -50,11 +50,11 @@ class MongoDB extends Persistence {
                 let keys = Object.keys(filter);
                 for (var i = 0; i < keys.length; i++) {
                     if (keys[i] === "_id") {
-                        if (filter._id instanceof ObjectID) {
+                        if (filter._id instanceof ObjectId) {
                             filterObject._id = filter._id;
                         }
                         else {
-                            filterObject._id = new ObjectID(filter._id);
+                            filterObject._id = new ObjectId(filter._id);
                         }
                     }
                     else if (filter[keys[i]] === "true" ||
@@ -76,8 +76,8 @@ class MongoDB extends Persistence {
     async update(collection, original, update) {
         let response;
         try {
-            if(original._id && !(original._id instanceof ObjectID)){
-                original._id = new ObjectID(original._id);
+            if(original._id && !(original._id instanceof ObjectId)){
+                original._id = new ObjectId(original._id);
             }
             response = await Database.collection(collection).updateOne(original, { $set: update });
             return response;
